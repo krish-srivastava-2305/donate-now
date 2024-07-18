@@ -18,7 +18,6 @@ export const POST = async (req: NextRequest):Promise<NextResponse> => {
         if(!correctPass) return NextResponse.json({error: "Incorrect password"},{status: 400})
 
         if(!user.isVerified) {
-            // send verification mail,
             return NextResponse.json({message: "Please verify your account"},{status: 200})
         }
 

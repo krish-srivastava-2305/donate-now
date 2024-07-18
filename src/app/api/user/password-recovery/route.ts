@@ -12,7 +12,7 @@ export const POST = async (req: NextRequest): Promise<NextResponse> => {
         user.passwordRecoveryCode = Math.floor(Math.random()*1000000)
         user.passwordRecoveryCodeExpiry = Date.now() + 360000
         const passwordRecoveryCodeUpdated = await user.save()
-        return NextResponse.json({message: "Code Generated"}, {status: 200})
+        return NextResponse.json({message: "Code Generated", passwordRecoveryCodeUpdated}, {status: 200})
 
     } catch (error) {
         console.error("Server Error: ", error)

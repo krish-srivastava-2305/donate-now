@@ -6,8 +6,8 @@ export interface User extends Document {
   password: string;
   firstName: string;
   lastName: string;
-  projectMaster: mongoose.Types.ObjectId;
-  projectEmployee: mongoose.Types.ObjectId;
+  donated: mongoose.Types.ObjectId[];
+  acquired: mongoose.Types.ObjectId[];
   isVerified: boolean;
   verifyCode: number
   verifyCodeExpiry: number;
@@ -40,13 +40,13 @@ const UserSchema: Schema<User> = new Schema(
       type: String,
       required: true,
     },
-    projectMaster: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'Project', 
+    donated: {
+      type: [mongoose.Schema.Types.ObjectId],
+      ref: 'Donation', 
     },
-    projectEmployee: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'Project',  
+    acquired: {
+      type: [mongoose.Schema.Types.ObjectId],
+      ref: 'Donation',  
     },
     isVerified: {
       type: Boolean,

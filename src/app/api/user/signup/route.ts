@@ -22,7 +22,7 @@ export const POST = async (req: NextRequest): Promise<NextResponse> => {
         const hashedPass = await bcrypt.hash(password, salt);
 
         const verifyCode: number = Math.floor(Math.random() * 10000);
-        const verifyCodeExpiry = Date.now() + 3600000; // 1 hour
+        const verifyCodeExpiry = Date.now() + 3600000*24; 
 
         const newUser = await userModel.create({
             username,

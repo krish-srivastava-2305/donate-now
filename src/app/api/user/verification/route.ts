@@ -11,10 +11,12 @@ export const POST = async (req: NextRequest) => {
         const user = await userModel.findOne({email})
         if(!user) return NextResponse.json({error: "User not found"}, {status: 400})
 
-        if(user.verifyCode !== verifyCode) return NextResponse.json({error: "Wrong Code"}, {status: 400})
+        if(user.verifyCode !== parseInt(verifyCode)) return NextResponse.json({error: "Wrong Code"}, {status: 400})
         const dateNow = Date.now()
         if(dateNow > user.verifyCodeExpiry) return NextResponse.json({error: "Code Expired"}, {status: 400})
         
+        user.isVerified = true
+        await user.save()
         return NextResponse.json({message: "Code Accepted"}, {status: 200})
         
     } catch (error) {
