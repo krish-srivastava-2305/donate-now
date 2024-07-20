@@ -8,10 +8,11 @@ import { useRouter } from "next/navigation";
 import toast, { Toaster } from "react-hot-toast";
 import convertor from "@/libs/convertor";
 
+
 export default function ValidationForm() {
   const router = useRouter();
   const [isDonor, setIsDonor] = useState<boolean>(true);
-  const [file, setFile] = useState<any>(null);
+  const [file, setFile] = useState<File | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -22,15 +23,52 @@ export default function ValidationForm() {
     setError(null);
 
     try {
-      if(isDonor) router.push('/donations')
-      const fileUrl = URL.createObjectURL(file)
-      const validated = await convertor(fileUrl)
-      if(!validated.verified) setError("Income exceeded or not read")
-      else {
-        const res = await axios.post('/api/user/income-validation', {verified: true, file})
-        
-        if(res.status == 200) toast.success("You are Validated!")
-        router.push('/products')
+      if (isDonor) {
+        router.push('/donations');
+        return;
+      }
+
+      if (!file) {
+        setError("Please select a file");
+        return;
+      }
+
+      const fileUrl = URL.createObjectURL(file);
+      const validated = await convertor(fileUrl);
+
+      if (!validated.verified) {
+        setError("Income exceeded or not read");
+        return;
+      }
+
+      const formData = new FormData();
+      formData.append('file', file);
+
+      const localUploadRes = await axios.post('/api/local/upload-image', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+
+      if (localUploadRes.data.status === 201) {
+        toast.success("File uploaded successfully!");
+        const { filename } = localUploadRes.data;
+        console.log("filename: ", filename)
+        const validationRes = await axios.post('/api/user/income-validation', { verified: true });
+        if (validationRes.status === 200) {
+          toast.success("You are Validated!");
+        }
+
+        const cloudinaryRes = await axios.post("/api/cloudinary", {fileUri: `D:\\Projects\\innovate-new\\public\\assets\\${filename}`});
+
+        if (cloudinaryRes.status === 200) {
+          toast.success("File Uploaded");
+
+          await axios.delete(`/api/local/delete?filename=${filename}`);
+          // toast.success("Local file deleted!");
+        }
+
+        router.push('/products');
       }
     } catch (error) {
       setError("Validation failed. Please try again.");
@@ -40,14 +78,14 @@ export default function ValidationForm() {
     }
   };
 
-  const handleDonorChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setIsDonor(e.target.checked);
-  };
-
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length > 0) {
       setFile(e.target.files[0]);
     }
+  };
+
+  const handleDonorChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setIsDonor(e.target.checked);
   };
 
   return (
