@@ -1,6 +1,7 @@
 import userModel from "@/models/user.model";
 import { DBConnet } from "@/libs/DBConnect";
 import { NextResponse, NextRequest } from "next/server";
+import convertor from "@/libs/convertor";
 
 export const POST = async (req: NextRequest) => {
     try {

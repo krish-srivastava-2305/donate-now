@@ -5,8 +5,8 @@ import * as React from 'react';
 interface EmailTemplateProps {
   firstName: string;
   forVerification: boolean,
-  verifyCode?: number,
-  passwordRecoveryCode?: number,
+  verifyCode?: string,
+  passwordRecoveryCode?: string,
 }
 
 export const EmailTemplate: React.FC<Readonly<EmailTemplateProps>> = ({
@@ -14,7 +14,7 @@ export const EmailTemplate: React.FC<Readonly<EmailTemplateProps>> = ({
 }) => (
   <div>
     <h1>Welcome, {firstName}!</h1>
-    <p>Here is your ${forVerification? verifyCode: passwordRecoveryCode} which is valid for next {forVerification? '24hr': '1hr'}. <br/>
+    <p>Here is your {forVerification? parseInt(verifyCode): parseInt(passwordRecoveryCode)} which is valid for next {forVerification? '24hr': '1hr'}. <br/>
     </p>
 
   </div>

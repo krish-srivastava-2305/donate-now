@@ -2,6 +2,7 @@ import { DBConnet } from "@/libs/DBConnect";
 import userModel from "@/models/user.model";
 import { NextRequest, NextResponse } from "next/server";
 import bcrypt from "bcrypt"
+import jwt from "jsonwebtoken"
 
 export const POST = async (req: NextRequest):Promise<NextResponse> => {
     DBConnet()
@@ -21,8 +22,11 @@ export const POST = async (req: NextRequest):Promise<NextResponse> => {
             return NextResponse.json({message: "Please verify your account"},{status: 200})
         }
 
-        return NextResponse.json({message: "Sign-In Success"},{status: 200})
+        const token = jwt.sign({id: user._id, isDonor: user.isDonor}, process.env.JWT_SECRET!, {expiresIn: '1d'})
 
+        const res = NextResponse.json({message: "Sign-In Success"},{status: 200})
+        res.cookies.set("token", token)
+        return res
     } catch (error) {
         console.error("Error sign-in: ",error)
         return NextResponse.json({error: "Server error"},{status: 500})

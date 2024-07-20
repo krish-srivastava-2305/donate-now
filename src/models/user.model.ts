@@ -8,6 +8,8 @@ export interface User extends Document {
   lastName: string;
   donated: mongoose.Types.ObjectId[];
   acquired: mongoose.Types.ObjectId[];
+  isDonor: boolean,
+  certificateId: string,
   isVerified: boolean;
   verifyCode: number
   verifyCodeExpiry: number;
@@ -48,6 +50,11 @@ const UserSchema: Schema<User> = new Schema(
       type: [mongoose.Schema.Types.ObjectId],
       ref: 'Donation',  
     },
+    isDonor : {
+      type: Boolean,
+      default: true
+    },
+    certificateId: String,
     isVerified: {
       type: Boolean,
       default: false,
