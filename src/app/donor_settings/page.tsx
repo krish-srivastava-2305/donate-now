@@ -89,7 +89,7 @@ export default function ValidationForm() {
   };
 
   return (
-    <div className="h-full w-full bg-slate-800 flex justify-center items-center">
+    <div className="h-full w-full bg-[#e0d8c4] flex justify-center items-center">
       <Toaster />
       <div className="max-w-md w-full mx-auto rounded-none md:rounded-2xl p-4 md:p-8 shadow-input bg-white dark:bg-black">
         <h2 className="font-bold text-xl text-neutral-800 dark:text-neutral-200">
