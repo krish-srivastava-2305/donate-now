@@ -12,9 +12,9 @@ export const DELETE = async (req : NextRequest): Promise<NextResponse> => {
         const { donationId } = await req.json()
         const token = req.cookies.get('token')
         if(!token) return NextResponse.json({error: "Token not found"}, {status: 400})
-        const decodedToken = jwt.decode(token.value)
+        const decodedToken = jwt.decode(token.value) as {id:string}
         if(!decodedToken) return NextResponse.json({error: "Problem is decoding token"}, {status: 400})
-        const id = decodedToken.id
+        const id = decodedToken.id 
         
         const donation = await donationModel.findByIdAndDelete(donationId)
         if(!donation) return NextResponse.json({error: "error deleting donation"}, {status: 400})

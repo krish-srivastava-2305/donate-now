@@ -4,7 +4,7 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/libs/utils";
 import axios from "axios";
-import { useRouter } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import toast, { Toaster } from "react-hot-toast";
 
 export default function SignupForm() {
@@ -23,6 +23,8 @@ export default function SignupForm() {
       
       if (res.status === 200) {
         toast.success("Login Success")
+        if(res.data.isDonor) router.push(`/dashboard/donor`)
+        else router.push('/dashboard/acquirer')
       } else {
         setError("LogIn failed.");
       }

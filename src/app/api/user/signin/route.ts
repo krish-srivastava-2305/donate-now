@@ -24,7 +24,7 @@ export const POST = async (req: NextRequest):Promise<NextResponse> => {
 
         const token = jwt.sign({id: user._id, isDonor: user.isDonor}, process.env.JWT_SECRET!, {expiresIn: '1d'})
 
-        const res = NextResponse.json({message: "Sign-In Success"},{status: 200})
+        const res = NextResponse.json({message: "Sign-In Success", isDonor: user.isDonor},{status: 200})
         res.cookies.set("token", token)
         return res
     } catch (error) {

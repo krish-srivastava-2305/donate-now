@@ -12,7 +12,7 @@ export const GET = async (req: NextRequest) => {
             return NextResponse.json({ error: "Token not found" }, { status: 400 });
         }
 
-        const decodedToken = jwt.decode(token);
+        const decodedToken = jwt.decode(token) as {id: string}
         if (!decodedToken) {
             return NextResponse.json({ error: "Problem decoding token" }, { status: 400 });
         }
