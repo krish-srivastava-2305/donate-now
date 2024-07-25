@@ -3,6 +3,7 @@ import userModel from "@/models/user.model";
 import donationModel from "@/models/donation.model";
 import { NextRequest, NextResponse } from "next/server";
 import jwt from "jsonwebtoken"
+import mongoose from "mongoose";
 
 export const POST = async (req: NextRequest): Promise<NextResponse> => {
     DBConnet()
@@ -14,7 +15,7 @@ export const POST = async (req: NextRequest): Promise<NextResponse> => {
         // console.log(token)
         if(!token) return NextResponse.json({error: "error fetching token"}, {status: 400})
 
-        const decodedToken = jwt.decode(token.value)
+        const decodedToken = jwt.decode(token.value) as {id: string}
         console.log(decodedToken)
         if(!decodedToken) return NextResponse.json({error: "error fetching token"}, {status: 400})
 
@@ -30,8 +31,9 @@ export const POST = async (req: NextRequest): Promise<NextResponse> => {
         })
         if(!donation) return NextResponse.json({error: "error registering donation"}, {status: 400})
 
+        const donationId = donation._id as mongoose.Types.ObjectId
         const donations = user.donated
-        donations.push(donation._id)
+        donations.push(donationId)
         user.donated = donations
         await user.save()
 

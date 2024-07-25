@@ -7,9 +7,8 @@ import { NextRequest, NextResponse } from "next/server";
 export const POST = async (req: NextRequest): Promise<NextResponse> => {
   try {
     DBConnet()
-    const {fileUri } = await req.json()
+    const {fileUri} = await req.json()
     const res = await cloudinary.uploader.upload(fileUri)
-    // console.log(res)
     if(res.url){
       const token: any = req.cookies.get('token')
       console.log(token)

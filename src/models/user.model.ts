@@ -7,7 +7,7 @@ export interface User extends Document {
   firstName: string;
   lastName: string;
   donated: mongoose.Types.ObjectId[];
-  acquired: mongoose.Types.ObjectId[];
+  requests: mongoose.Types.ObjectId[];
   isDonor: boolean,
   certificateId: string,
   isVerified: boolean;
@@ -46,9 +46,9 @@ const UserSchema: Schema<User> = new Schema(
       type: [mongoose.Schema.Types.ObjectId],
       ref: 'Donation', 
     },
-    acquired: {
+    requests: {
       type: [mongoose.Schema.Types.ObjectId],
-      ref: 'Donation',  
+      ref: 'Donation', 
     },
     isDonor : {
       type: Boolean,

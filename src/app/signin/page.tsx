@@ -6,6 +6,7 @@ import { cn } from "@/libs/utils";
 import axios from "axios";
 import { useParams, useRouter } from "next/navigation";
 import toast, { Toaster } from "react-hot-toast";
+import Link from "next/link";
 
 export default function SignupForm() {
   const router = useRouter();
@@ -73,6 +74,10 @@ export default function SignupForm() {
 
           <div className="bg-gradient-to-r from-transparent via-neutral-300 dark:via-neutral-700 to-transparent my-8 h-[1px] w-full" />
         </form>
+        <div className="flex justify-center items-center gap-24">
+        <Link href={'/signup'} className="hover:text-blue-500 hover:underline text-sm" >SignUp</Link>
+        <Link href={'/password-recovery'} className="hover:text-blue-500 hover:underline text-sm" >Forgot Password?</Link>
+        </div>
       </div>
     </div>
   );
