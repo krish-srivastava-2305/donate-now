@@ -20,8 +20,8 @@ function ProductPage() {
   useEffect(() => {
     const dataFetch = async () => {
       try {
-        const res = await axios.get('/api/donations/show-all')
-        const allItems = res.data.donations
+        const res = await axios.get('/api/requests/get-all')
+        const allItems = res.data.requests
         setItems(allItems)
         setFilteredItems(allItems)
       } catch (err) {
@@ -68,9 +68,9 @@ function ProductPage() {
             />
           </div>
           <p className='p-3 text-lg font-semibold'>
-            All Products {searchTerm && `/ Search: "${searchTerm}"`}
+            All Requests {searchTerm && `/ Search: "${searchTerm}"`}
           </p>
-          <ExpandableCard cards={filteredItems} images={true} />
+          <ExpandableCard cards={filteredItems} images={false} />
         </div>
         {/* <aside className='w-1/5 border-l-2 min-h-screen border-l-black pl-8'>
           <h3>Your Requests</h3>

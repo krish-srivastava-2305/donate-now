@@ -13,9 +13,10 @@ type itemType = {
 
 type props = {
   cards: Array<itemType>;
+  images: boolean
 };
 
-export function ExpandableCard({ cards }: props) {
+export function ExpandableCard({ cards, images }: props) {
   const [active, setActive] = useState<(typeof cards)[number] | boolean | null>(
     null
   );
@@ -81,7 +82,7 @@ export function ExpandableCard({ cards }: props) {
               ref={ref}
               className="w-full max-w-[500px] h-full md:h-fit md:max-h-[90%] flex flex-col bg-white dark:bg-neutral-900 sm:rounded-3xl overflow-hidden"
             >
-              <motion.div layoutId={`image-${active.name}-${id}`}>
+              {images && <motion.div layoutId={`image-${active.name}-${id}`}>
                 <Image
                   priority
                   width={200}
@@ -90,7 +91,7 @@ export function ExpandableCard({ cards }: props) {
                   alt={active.name}
                   className="w-full h-80 lg:h-80 sm:rounded-tr-lg sm:rounded-tl-lg object-cover object-top"
                 />
-              </motion.div>
+              </motion.div>}
               <div>
                 <div className="flex justify-between items-start p-4">
                   <div className="flex flex-col w-full">
@@ -100,7 +101,7 @@ export function ExpandableCard({ cards }: props) {
                     >
                       {active.name}
                     </motion.h3>
-                    <motion.a
+                    {images && <motion.a
                     layout
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
@@ -110,7 +111,7 @@ export function ExpandableCard({ cards }: props) {
                     className="px-4 py-3 w-24 text-sm rounded-full font-bold bg-green-500 text-white"
                   >
                     Request
-                  </motion.a>
+                  </motion.a>}
                   </div>
                 </div>
                 <div className="pt-4 relative px-4">
@@ -129,7 +130,7 @@ export function ExpandableCard({ cards }: props) {
           </div>
         ) : null}
       </AnimatePresence>
-      <ul className="max-w-2xl mx-auto w-full grid grid-cols-1 md:grid-cols-2 items-start gap-4">
+      <ul className="mx-auto w-full grid grid-cols-2 md:grid-cols-4 items-start gap-4">
         {cards.map((card) => (
           <motion.div
             layoutId={`card-${card.name}-${id}`}
@@ -138,7 +139,7 @@ export function ExpandableCard({ cards }: props) {
             className="p-4 flex flex-col hover:bg-neutral-50 dark:hover:bg-neutral-800 rounded-xl cursor-pointer"
           >
             <div className="flex gap-4 flex-col w-full">
-              <motion.div layoutId={`image-${card.name}-${id}`}>
+              {images && <motion.div layoutId={`image-${card.name}-${id}`}>
                 <Image
                   width={100}
                   height={100}
@@ -146,7 +147,7 @@ export function ExpandableCard({ cards }: props) {
                   alt={card.name}
                   className="h-60 w-full rounded-lg object-cover object-top"
                 />
-              </motion.div>
+              </motion.div>}
               <div className="flex justify-center items-center flex-col">
                 <motion.h3
                   layoutId={`name-${card.name}-${id}`}
