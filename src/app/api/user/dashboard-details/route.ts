@@ -1,16 +1,15 @@
-import { DBConnet } from "@/libs/DBConnect";
+import { DBConnect } from "@/libs/DBConnect";
 import userModel from "@/models/user.model";
 import { NextRequest, NextResponse } from "next/server";
 import jwt from "jsonwebtoken";
 
 export const GET = async (req: NextRequest): Promise<NextResponse> => {
-    DBConnet();
+    DBConnect();
     try {
         const token = req.cookies.get("token")?.value;
         if (!token) return NextResponse.json({ error: "Token error" }, { status: 400 });
 
-        const decodedToken = jwt.decode(token)
-        console.log(decodedToken)
+        const decodedToken = jwt.decode(token) as { id: string }
         if (!decodedToken) return NextResponse.json({ error: "Invalid token" }, { status: 400 });
 
         const id = decodedToken.id;

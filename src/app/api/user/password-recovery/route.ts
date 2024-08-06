@@ -1,10 +1,10 @@
-import { DBConnet } from "@/libs/DBConnect";
+import { DBConnect } from "@/libs/DBConnect";
 import userModel from "@/models/user.model";
 import { NextRequest, NextResponse } from "next/server";
 
 export const POST = async (req: NextRequest): Promise<NextResponse> => {
     try {
-        DBConnet()
+        DBConnect()
         const { email } = await req.json()
         if(!email) return NextResponse.json({error: "Please provide an email"}, {status: 400})
         const user = await userModel.findOne({email})

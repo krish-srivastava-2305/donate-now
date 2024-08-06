@@ -1,11 +1,11 @@
 import userModel from "@/models/user.model";
-import { DBConnet } from "@/libs/DBConnect";
+import { DBConnect } from "@/libs/DBConnect";
 import { NextResponse, NextRequest } from "next/server";
 import convertor from "@/libs/convertor";
 
 export const POST = async (req: NextRequest) => {
     try {
-        DBConnet();
+        DBConnect();
         const {verifyCode, email} = await req.json()
         if(!email || !verifyCode) return NextResponse.json({error: "fill details"}, {status: 400})
 

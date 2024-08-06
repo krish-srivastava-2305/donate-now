@@ -1,21 +1,22 @@
-import { verify } from 'crypto';
-import Link from 'next/link';
 import * as React from 'react';
 
-interface EmailTemplateProps {
+type EmailTemplateProps = {
   firstName: string;
-  forVerification: boolean,
-  verifyCode?: string,
-  passwordRecoveryCode?: string,
-}
+  forVerification: boolean;
+  verifyCode?: string;
+  passwordRecoveryCode?: string;
+};
 
 export const EmailTemplate: React.FC<Readonly<EmailTemplateProps>> = ({
-  firstName, forVerification, verifyCode, passwordRecoveryCode
-}) => (
+  firstName,
+  forVerification,
+  verifyCode,
+  passwordRecoveryCode,
+}: EmailTemplateProps) => (
   <div>
     <h1>Welcome, {firstName}!</h1>
-    <p>Here is your {forVerification? parseInt(verifyCode): parseInt(passwordRecoveryCode)} which is valid for next {forVerification? '24hr': '1hr'}. <br/>
+    <p>
+      Here is your {forVerification ? verifyCode : passwordRecoveryCode} which is valid for the next {forVerification ? '24hr' : '1hr'}.
     </p>
-
   </div>
 );

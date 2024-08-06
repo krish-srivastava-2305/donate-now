@@ -1,11 +1,11 @@
-import { DBConnet } from "@/libs/DBConnect";
+import { DBConnect } from "@/libs/DBConnect";
 import { NextRequest, NextResponse } from "next/server";
 import jwt from "jsonwebtoken"
 import userModel from "@/models/user.model";
 import requestModel from "@/models/requests.model";
 
 export const DELETE = async (req : NextRequest): Promise<NextResponse> => {
-    DBConnet()
+    DBConnect()
     try {
         
         const { reqId } = await req.json()

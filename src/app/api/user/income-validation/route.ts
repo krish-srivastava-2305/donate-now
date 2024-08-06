@@ -1,11 +1,11 @@
 import userModel from "@/models/user.model";
 import { NextResponse, NextRequest } from "next/server";
-import { DBConnet } from "@/libs/DBConnect";
+import { DBConnect } from "@/libs/DBConnect";
 import jwt from "jsonwebtoken";
 
 export const POST = async (req: NextRequest) => {
     try {
-        DBConnet();
+        DBConnect();
         const { verified, file } = await req.json();
         console.log(file)
         // console.log(verified)

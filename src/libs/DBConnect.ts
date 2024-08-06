@@ -6,7 +6,7 @@ type connection = {
 
 let connection: connection = {}
 
-export const DBConnet = async () => {
+export const DBConnect = async () => {
     if(connection.isConnected){
         console.log("Already Connected")
         return;

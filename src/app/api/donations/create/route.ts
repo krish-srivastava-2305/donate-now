@@ -1,4 +1,4 @@
-import { DBConnet } from "@/libs/DBConnect";
+import { DBConnect } from "@/libs/DBConnect";
 import userModel from "@/models/user.model";
 import donationModel from "@/models/donation.model";
 import { NextRequest, NextResponse } from "next/server";
@@ -6,7 +6,7 @@ import jwt from "jsonwebtoken"
 import mongoose from "mongoose";
 
 export const POST = async (req: NextRequest): Promise<NextResponse> => {
-    DBConnet()
+    DBConnect()
     try {
         const {name, description} = await req.json()
         if(!name || !description) return NextResponse.json({error: "Fill details"}, {status: 400})

@@ -1,11 +1,11 @@
-import { DBConnet } from "@/libs/DBConnect";
+import { DBConnect } from "@/libs/DBConnect";
 import requestModel from "@/models/requests.model";
 import { NextRequest, NextResponse } from "next/server";
 import jwt from "jsonwebtoken"
 import userModel from "@/models/user.model";
 
 export const GET = async (req: NextRequest) => {
-    DBConnet()
+    DBConnect()
     try {
         const token = req.cookies.get('token')?.value;
         if (!token) {

@@ -1,10 +1,10 @@
 import donationModel from "@/models/donation.model";
-import { DBConnet } from "@/libs/DBConnect";
+import { DBConnect } from "@/libs/DBConnect";
 import { NextRequest, NextResponse } from "next/server";
 
 
 export const GET = async (req: NextRequest): Promise<NextResponse> => {
-    DBConnet()
+    DBConnect()
     try {
         const donations = await donationModel.find({}).select("-__v -createdAt -updatedAt")
         return NextResponse.json({message:"Data sent", donations}, {status:200})

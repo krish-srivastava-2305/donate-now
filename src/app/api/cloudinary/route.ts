@@ -1,12 +1,12 @@
 import { cloudinary } from "@/libs/cloudinary"
-import { DBConnet } from "@/libs/DBConnect";
+import { DBConnect } from "@/libs/DBConnect";
 import userModel from "@/models/user.model";
 import jwt from "jsonwebtoken";
 import { NextRequest, NextResponse } from "next/server";
 
 export const POST = async (req: NextRequest): Promise<NextResponse> => {
   try {
-    DBConnet()
+    DBConnect()
     const {fileUri} = await req.json()
     const res = await cloudinary.uploader.upload(fileUri)
     if(res.url){

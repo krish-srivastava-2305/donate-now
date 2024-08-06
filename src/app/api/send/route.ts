@@ -11,8 +11,8 @@ export async function POST(req: NextRequest) {
     const { data, error } = await resend.emails.send({
       from: 'Acme <onboarding@resend.dev>',
       to: [email],
-      subject: "Hello world",
-      react: EmailTemplate({ firstName, forVerification: false, verifyCode, passwordRecoveryCode }) as React.ReactElement,
+      subject: forVerification? "Verify" : "Recover Password",
+      react: EmailTemplate({ firstName, forVerification, verifyCode, passwordRecoveryCode }) as React.ReactElement,
     });
 
     if (error) {

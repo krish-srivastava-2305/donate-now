@@ -1,12 +1,12 @@
 import donationModel from "@/models/donation.model";
 import userModel from "@/models/user.model";
-import { DBConnet } from "@/libs/DBConnect";
+import { DBConnect } from "@/libs/DBConnect";
 import { NextResponse, NextRequest } from "next/server";
 import jwt from "jsonwebtoken"
 
 
 export const DELETE = async (req : NextRequest): Promise<NextResponse> => {
-    DBConnet()
+    DBConnect()
     try {
         
         const { donationId } = await req.json()

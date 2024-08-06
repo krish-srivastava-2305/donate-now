@@ -1,11 +1,11 @@
 import userModel from "@/models/user.model";
 import { NextRequest, NextResponse } from "next/server";
 import bcrypt from "bcrypt";
-import { DBConnet } from "@/libs/DBConnect";
+import { DBConnect } from "@/libs/DBConnect";
 import jwt from "jsonwebtoken";
 
 export const POST = async (req: NextRequest): Promise<any> => {
-  await DBConnet();
+  await DBConnect();
   try {
     const { username, firstName, lastName, password, email } = await req.json();
 

@@ -1,10 +1,10 @@
-import { DBConnet } from "@/libs/DBConnect";
+import { DBConnect } from "@/libs/DBConnect";
 import userModel from "@/models/user.model";
 import { NextRequest, NextResponse } from "next/server";
 import bcrypt from "bcrypt"
 
 export const POST = async (req: NextRequest) => {
-    DBConnet()
+    DBConnect()
     try {
         const {email, passwordRecoveryCode, newPassword} = await req.json()
         if(!passwordRecoveryCode) return NextResponse.json({error: "Please write code before requesting"}, {status: 400})    

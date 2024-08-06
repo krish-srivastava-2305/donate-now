@@ -3,6 +3,8 @@ import Image from "next/image";
 import React, { useEffect, useId, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { useOutsideClick } from "@/hooks/useOutsideClick";
+import toast from "react-hot-toast";
+import axios from "axios";
 
 type itemType = {
   name: string;
@@ -22,6 +24,15 @@ export function ExpandableCard({ cards, images }: props) {
   );
   const id = useId();
   const ref = useRef<HTMLDivElement>(null);
+
+  const sendRequest = async () => {
+    try {
+      const res = await axios.post('/api/sendRequest', {cardId})
+      
+    } catch (error) {
+      toast.error("Error sending request")
+    }
+  }
 
   useEffect(() => {
     function onKeyDown(event: KeyboardEvent) {
@@ -101,17 +112,16 @@ export function ExpandableCard({ cards, images }: props) {
                     >
                       {active.name}
                     </motion.h3>
-                    {images && <motion.a
+                    {images && <motion.button
                     layout
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     exit={{ opacity: 0 }}
-                    href={"/"}
-                    target="_blank"
+                    onClick={sendRequest}
                     className="px-4 py-3 w-24 text-sm rounded-full font-bold bg-green-500 text-white"
                   >
                     Request
-                  </motion.a>}
+                  </motion.button>}
                   </div>
                 </div>
                 <div className="pt-4 relative px-4">
@@ -134,7 +144,7 @@ export function ExpandableCard({ cards, images }: props) {
         {cards.map((card) => (
           <motion.div
             layoutId={`card-${card.name}-${id}`}
-            key={card.name}
+            key={card.id}
             onClick={() => setActive(card)}
             className="p-4 flex flex-col hover:bg-neutral-50 dark:hover:bg-neutral-800 rounded-xl cursor-pointer"
           >
