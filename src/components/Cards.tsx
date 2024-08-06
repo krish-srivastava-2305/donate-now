@@ -10,12 +10,13 @@ type itemType = {
   name: string;
   description: string;
   image?: string;
-  id: string;
+  _id: string;
+  donor: string;
 };
 
 type props = {
   cards: Array<itemType>;
-  images: boolean
+  images: boolean;
 };
 
 export function ExpandableCard({ cards, images }: props) {
@@ -25,16 +26,17 @@ export function ExpandableCard({ cards, images }: props) {
   const id = useId();
   const ref = useRef<HTMLDivElement>(null);
 
-  const sendRequest = async () => {
+  const sendRequest = async (donorId: string) => {
     try {
-      const res = await axios.post('/api/sendRequest', {cardId})
-      
+      const res = await axios.post('/api/sendRequest', { donorId });
+      toast.success("Request sent successfully");
     } catch (error) {
-      toast.error("Error sending request")
+      toast.error("Error sending request");
     }
-  }
+  };
 
   useEffect(() => {
+    console.log(cards);
     function onKeyDown(event: KeyboardEvent) {
       if (event.key === "Escape") {
         setActive(false);
@@ -93,16 +95,18 @@ export function ExpandableCard({ cards, images }: props) {
               ref={ref}
               className="w-full max-w-[500px] h-full md:h-fit md:max-h-[90%] flex flex-col bg-white dark:bg-neutral-900 sm:rounded-3xl overflow-hidden"
             >
-              {images && <motion.div layoutId={`image-${active.name}-${id}`}>
-                <Image
-                  priority
-                  width={200}
-                  height={200}
-                  src={active.image || "/default-image.jpg"}
-                  alt={active.name}
-                  className="w-full h-80 lg:h-80 sm:rounded-tr-lg sm:rounded-tl-lg object-cover object-top"
-                />
-              </motion.div>}
+              {images && (
+                <motion.div layoutId={`image-${active.name}-${id}`}>
+                  <Image
+                    priority
+                    width={200}
+                    height={200}
+                    src={active.image || "/default-image.jpg"}
+                    alt={active.name}
+                    className="w-full h-80 lg:h-80 sm:rounded-tr-lg sm:rounded-tl-lg object-cover object-top"
+                  />
+                </motion.div>
+              )}
               <div>
                 <div className="flex justify-between items-start p-4">
                   <div className="flex flex-col w-full">
@@ -112,16 +116,18 @@ export function ExpandableCard({ cards, images }: props) {
                     >
                       {active.name}
                     </motion.h3>
-                    {images && <motion.button
-                    layout
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    exit={{ opacity: 0 }}
-                    onClick={sendRequest}
-                    className="px-4 py-3 w-24 text-sm rounded-full font-bold bg-green-500 text-white"
-                  >
-                    Request
-                  </motion.button>}
+                    {images && (
+                      <motion.button
+                        layout
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        onClick={() => sendRequest(active.donor)}
+                        className="px-4 py-3 w-24 text-sm rounded-full font-bold bg-green-500 text-white"
+                      >
+                        Request
+                      </motion.button>
+                    )}
                   </div>
                 </div>
                 <div className="pt-4 relative px-4">
@@ -144,20 +150,22 @@ export function ExpandableCard({ cards, images }: props) {
         {cards.map((card) => (
           <motion.div
             layoutId={`card-${card.name}-${id}`}
-            key={card.id}
+            key={card._id}
             onClick={() => setActive(card)}
             className="p-4 flex flex-col hover:bg-neutral-50 dark:hover:bg-neutral-800 rounded-xl cursor-pointer"
           >
             <div className="flex gap-4 flex-col w-full">
-              {images && <motion.div layoutId={`image-${card.name}-${id}`}>
-                <Image
-                  width={100}
-                  height={100}
-                  src={card.image || "/default-image.jpg"}
-                  alt={card.name}
-                  className="h-60 w-full rounded-lg object-cover object-top"
-                />
-              </motion.div>}
+              {images && (
+                <motion.div layoutId={`image-${card.name}-${id}`}>
+                  <Image
+                    width={100}
+                    height={100}
+                    src={card.image || "/default-image.jpg"}
+                    alt={card.name}
+                    className="h-60 w-full rounded-lg object-cover object-top"
+                  />
+                </motion.div>
+              )}
               <div className="flex justify-center items-center flex-col">
                 <motion.h3
                   layoutId={`name-${card.name}-${id}`}

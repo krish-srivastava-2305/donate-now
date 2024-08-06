@@ -7,7 +7,8 @@ type ItemType = {
   name: string,
   description: string,
   image?: string,
-  id: string
+  donor: string
+  _id: string
 }
 
 function ProductPage() {
@@ -72,9 +73,6 @@ function ProductPage() {
           </p>
           <ExpandableCard cards={filteredItems} images={true} />
         </div>
-        {/* <aside className='w-1/5 border-l-2 min-h-screen border-l-black pl-8'>
-          <h3>Your Requests</h3>
-        </aside> */}
       </main>
     </div>
   )
