@@ -23,16 +23,19 @@ export function ExpandableCard({ cards, images }: props) {
   const [active, setActive] = useState<(typeof cards)[number] | boolean | null>(
     null
   );
+  const [request, setRequest] = useState<string>('Request')
   const id = useId();
   const ref = useRef<HTMLDivElement>(null);
 
   const sendRequest = async (donorId: string) => {
+    setRequest("Requesting")
     try {
       const res = await axios.post('/api/sendRequest', { donorId });
       toast.success("Request sent successfully");
     } catch (error) {
       toast.error("Error sending request");
     }
+    setRequest("Request")
   };
 
   useEffect(() => {
@@ -125,7 +128,7 @@ export function ExpandableCard({ cards, images }: props) {
                         onClick={() => sendRequest(active.donor)}
                         className="px-4 py-3 w-24 text-sm rounded-full font-bold bg-green-500 text-white"
                       >
-                        Request
+                        {request}
                       </motion.button>
                     )}
                   </div>

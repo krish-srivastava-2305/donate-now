@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   motion,
   AnimatePresence,
@@ -8,7 +8,7 @@ import {
 } from "framer-motion";
 import { cn } from "@/libs/utils";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 
 export const FloatingNav = ({
   navItems,
@@ -21,13 +21,13 @@ export const FloatingNav = ({
   }[];
   className?: string;
 }) => {
+  const [signIn, setSignIn] = useState<boolean>(false)
   const { scrollYProgress } = useScroll();
   const router = useRouter()
 
   const [visible, setVisible] = useState(true);
 
   useMotionValueEvent(scrollYProgress, "change", (current) => {
-    // Check if current is not undefined and is a number
     if (typeof current === "number") {
       let direction = current! - scrollYProgress.getPrevious()!;
 
@@ -42,6 +42,12 @@ export const FloatingNav = ({
       }
     }
   });
+  const path = usePathname()
+
+  useEffect(()=>{
+    console.log(path)
+    if(path === '/' || path === '/signin' || path === 'signup') setSignIn(true)
+  }, [path])
 
   return (
     <AnimatePresence mode="wait">
@@ -74,11 +80,11 @@ export const FloatingNav = ({
             <span className="hidden sm:block text-sm">{navItem.name}</span>
           </Link>
         ))}
-        <button className="border text-sm font-medium relative border-neutral-200 dark:border-white/[0.2] text-black dark:text-white px-4 py-2 rounded-full" onClick={()=>{router.push('/signin')}} >
-          <span>Login</span>
+        <button className="border text-sm font-medium relative border-neutral-200 dark:border-white/[0.2] text-black dark:text-white px-4 py-2 rounded-full" onClick={()=>{router.push(signIn? '/signin' : '/signout')}} >
+          <span>{signIn? "SignIn" : "SignOut"}</span>
           <span className="absolute inset-x-0 w-1/2 mx-auto -bottom-px bg-gradient-to-r from-transparent via-blue-500 to-transparent  h-px" />
         </button>
       </motion.div>
     </AnimatePresence>
   );
-};
+}; 

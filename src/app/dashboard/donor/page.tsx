@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import { useRouter } from 'next/navigation'
 import { toast, Toaster } from 'react-hot-toast'
+import Link from 'next/link'
 
 type UserDetails = {
   firstName: string,
@@ -132,16 +133,19 @@ export default function DonorDashboard() {
     <>
       <Toaster />
       <div className="container mx-auto p-4 bg-[#e0d8c4]">
-        <h1 className="text-3xl font-bold mb-8 text-center">User Dashboard</h1>
+      <div className='flex w-full p-4 justify-between items-center'>
+          <h1 className="text-3xl font-bold mb-8 text-center">User Dashboard</h1>
+          <Link href={'/requests'} className="bg-blue-500 h-10 text-white px-4 py-2 rounded hover:bg-blue-600" >Requests</Link>
+        </div>
         <div className="shadow-md rounded-lg p-6 mb-6 bg-[#c9c4b5]">
           <div className="flex items-center mb-4">
-            {userDetails?.imageUrl && (
+            {/* {userDetails?.imageUrl && (
               <img
                 src={userDetails.imageUrl}
                 alt="User Image"
                 className="w-20 h-20 rounded-full mr-4 border-2 border-gray-200"
               />
-            )}
+            )} */}
             <div>
               <h2 className="text-2xl font-semibold">{userDetails?.firstName} {userDetails?.lastName}</h2>
               <p className="text-gray-600">@{userDetails?.username}</p>

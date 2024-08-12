@@ -27,6 +27,7 @@ export default function SignupForm() {
       const res = await axios.post('/api/user/signup', { username, firstName, lastName, password, email });
       
       if (res.status === 200) {
+        console.log(res.data)
         const verifyCodeReal = res.data?.verifyCode;
         console.log(verifyCodeReal);
   

@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import { ExpandableCard } from '@/components/Cards'
+import Link from 'next/link'
 
 type ItemType = {
   name: string,
@@ -50,27 +51,27 @@ function ProductPage() {
   }
 
   return (
-    <div className='min-h-screen w-full flex bg-[#e0d8c4] flex-col'>
-      <header className='w-full h-28 border-b-2 border-b-black flex justify-start items-center fixed top-0 left-0 z-10 bg-[#e0d8c4]'>
-        <h1 className='text-4xl p-4 font-bold text-amber-900'>
-          DonateNow
-        </h1>
-      </header>
-      
-      <main className='flex mt-20 p-8 pt-16'>
-        <div className='w-full pr-8'>
+    <div className='min-h-screen w-full flex flex-col bg-[#e0d8c4]'>
+      <header className='w-full h-28 border-b-2 border-b-black flex justify-between items-center fixed top-0 left-0 z-10 bg-[#e0d8c4] px-8'>
+        <div className='flex flex-col'>
           <div className='mb-4'>
             <input 
               type='text' 
               placeholder='Search items...'
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className='w-full p-2 border-2 border-gray-300 rounded-3xl'
+              className='w-64 p-2 border-2 border-gray-300 rounded-3xl'
             />
           </div>
-          <p className='p-3 text-lg font-semibold'>
-            All Products {searchTerm && `/ Search: "${searchTerm}"`}
-          </p>
+        </div>
+        <h1 className='text-4xl font-bold text-amber-900'>
+          DonateNow
+        </h1>
+        <Link href={'/dashboard/acquirer'} className="bg-blue-500 h-10 text-white px-4 py-2 rounded hover:bg-blue-600" >Dashboard</Link>
+      </header>
+      
+      <main className='flex mt-32 p-8'>
+        <div className='w-full pr-8'>
           <ExpandableCard cards={filteredItems} images={true} />
         </div>
       </main>

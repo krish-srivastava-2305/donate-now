@@ -24,7 +24,7 @@ export default function ValidationForm() {
 
     try {
       if (isDonor) {
-        router.push('/donations');
+        router.push('/dashboard/donor');
         return;
       }
 
@@ -51,7 +51,6 @@ export default function ValidationForm() {
       });
 
       if (localUploadRes.data.status === 201) {
-        toast.success("File uploaded successfully!");
         const { filename } = localUploadRes.data;
         console.log("filename: ", filename)
         const validationRes = await axios.post('/api/user/income-validation', { verified: true });
@@ -63,9 +62,7 @@ export default function ValidationForm() {
 
         if (cloudinaryRes.status === 200) {
           toast.success("File Uploaded");
-
           await axios.delete(`/api/local/delete?filename=${filename}`);
-          // toast.success("Local file deleted!");
         }
 
         router.push('/products');
