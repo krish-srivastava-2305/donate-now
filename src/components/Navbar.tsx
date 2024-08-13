@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useEffect } from "react";
 import { FloatingNav } from "./ui/floating-navbar";
 import { IconHome, IconMessage, IconUser } from "@tabler/icons-react";
 export function Nav() {
@@ -22,6 +22,8 @@ export function Nav() {
       ),
     },
   ];
+
+  
   return (
     <div className="relative  w-full">
       <FloatingNav navItems={navItems} />

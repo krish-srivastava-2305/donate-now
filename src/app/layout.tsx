@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import { Montserrat } from "next/font/google"
 import "./globals.css";
 import { Nav } from "@/components/Navbar";
+import { useRef } from "react";
 
 const montserrat = Montserrat({
   weight: ['700'],
@@ -24,7 +25,6 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={montserrat.className}>
-        <Nav/>
         {children}
       </body>
     </html>

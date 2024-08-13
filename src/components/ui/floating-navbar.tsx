@@ -45,7 +45,6 @@ export const FloatingNav = ({
   const path = usePathname()
 
   useEffect(()=>{
-    console.log(path)
     if(path === '/' || path === '/signin' || path === 'signup') setSignIn(true)
   }, [path])
 

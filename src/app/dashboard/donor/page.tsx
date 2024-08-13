@@ -4,6 +4,7 @@ import axios from 'axios'
 import { useRouter } from 'next/navigation'
 import { toast, Toaster } from 'react-hot-toast'
 import Link from 'next/link'
+import { Nav } from '@/components/Navbar'
 
 type UserDetails = {
   firstName: string,
@@ -132,6 +133,7 @@ export default function DonorDashboard() {
   return (
     <>
       <Toaster />
+      <Nav />
       <div className="container mx-auto p-4 bg-[#e0d8c4]">
       <div className='flex w-full p-4 justify-between items-center'>
           <h1 className="text-3xl font-bold mb-8 text-center">User Dashboard</h1>

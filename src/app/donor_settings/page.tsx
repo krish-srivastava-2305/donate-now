@@ -7,6 +7,8 @@ import axios from "axios";
 import { useRouter } from "next/navigation";
 import toast, { Toaster } from "react-hot-toast";
 import convertor from "@/libs/convertor";
+import { AuroraBackground } from "@/components/ui/aurora-background";
+import { Nav } from "@/components/Navbar";
 
 
 export default function ValidationForm() {
@@ -86,18 +88,20 @@ export default function ValidationForm() {
   };
 
   return (
-    <div className="h-full w-full bg-[#e0d8c4] flex justify-center items-center">
+    <AuroraBackground>
+      <Nav />
+      <div className="h-full w-full bg-transparent flex justify-center items-center">
       <Toaster />
-      <div className="max-w-md w-full mx-auto rounded-none md:rounded-2xl p-4 md:p-8 shadow-input bg-white dark:bg-black">
+      <div className="z-10 max-w-md w-full mx-auto rounded-none md:rounded-2xl p-4 md:p-8 shadow-input bg-white dark:bg-black">
         <h2 className="font-bold text-xl text-neutral-800 dark:text-neutral-200">
           Please validate yourself
         </h2>
 
         <form className="my-8" onSubmit={handleSubmit}>
           <div className="flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-2 mb-4">
-            <LabelInputContainer>
-              <Label htmlFor="donor">Are you a donor?: </Label>
-              <Input className="w-8" id="donor" type="checkbox" defaultChecked={true} onChange={handleDonorChange} />
+            <LabelInputContainer className="flex-row">
+              <input className="w-4 h-4" id="donor" type="checkbox" defaultChecked={true} onChange={handleDonorChange} />
+              <Label htmlFor="donor" className="font-bold text-pretty">Are you a donor?</Label>           
             </LabelInputContainer>
             </div>
             <div>
@@ -112,12 +116,10 @@ export default function ValidationForm() {
             )}
           </div>
           <div className="flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-2 mb-4">
-            <LabelInputContainer>
-              <Input className="w-8 h-4" id="donor" type="checkbox" defaultChecked={true} onChange={handleDonorChange} />
+            <LabelInputContainer className="flex-row">
+              <input className="w-8 h-4" id="donor" type="checkbox" defaultChecked={true} onChange={handleDonorChange} />
               <Label htmlFor="donor" className="text-xs font-bold text-pretty">Consent to use your email so that as a donor you can recieve a mail from concerned authorities and donation acquirer to send mail to owner.
-
-            </Label>
-              
+              </Label>
             </LabelInputContainer>
             </div>
 
@@ -135,6 +137,7 @@ export default function ValidationForm() {
         </form>
       </div>
     </div>
+    </AuroraBackground>
   );
 }
 
@@ -155,7 +158,7 @@ const LabelInputContainer = ({
   className?: string;
 }) => {
   return (
-    <div className={cn("flex flex-col space-y-2 w-full", className)}>
+    <div className={cn("flex gap-4 flex-col space-y-2 w-full items-center", className)}>
       {children}
     </div>
   );

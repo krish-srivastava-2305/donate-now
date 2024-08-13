@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import { ExpandableCard } from '@/components/Cards'
 import Link from 'next/link'
+import { Nav } from '@/components/Navbar'
 
 type ItemType = {
   name: string,
@@ -52,6 +53,7 @@ function ProductPage() {
 
   return (
     <div className='min-h-screen w-full flex flex-col bg-[#e0d8c4]'>
+      <Nav />
       <header className='w-full h-28 border-b-2 border-b-black flex justify-between items-center fixed top-0 left-0 z-10 bg-[#e0d8c4] px-8'>
         <div className='flex flex-col'>
           <div className='mb-4'>
